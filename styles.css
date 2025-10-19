@@ -137,3 +137,38 @@ aside {
   padding: 15px;
 }
 
+.news-item {
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  margin-bottom: 8px;
+  transition: transform 0.1s ease;
+}
+
+.news-controls {
+    margin-bottom: 5px;
+    background-color: #f4a261;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 6px 10px;
+    font-weight: bold;
+    text-transform: uppercase;
+    user-select: none;
+}
+
+
+.summary_arrow {
+    cursor: pointer;
+}
+
+.move_arrow {
+    cursor: ns-resize;
+}
+
+.news-item p {
+    padding: 10px;
+    display: none;
+}
+
