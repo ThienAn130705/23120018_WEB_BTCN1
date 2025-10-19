@@ -1,0 +1,56 @@
+* {
+    margin: 0;  
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+}
+
+.container {
+    max-width: 1280px;
+    margin: 0 auto;
+}
+
+/* Header */
+
+.header_nav {
+  height: 66px;
+}
+
+header {
+    text-align: center;
+}
+
+header h1 {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
+
+/* Navigation */
+nav {
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+
+/* Footer */
+footer {
+    height: 33px;
+}
+
+
+.main-content {
+  display: flex;
+  flex-direction: row;
+}
+
+/* Side */
+aside {
+  width: 256px;
+  padding: 15px;
+}
+
