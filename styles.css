@@ -68,7 +68,48 @@ nav button.active {
 
 /* Footer */
 footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
     height: 33px;
+    background: #eec695;
+    color: white;
+    padding: 20px;
+    font-size: 0.9em;
+    border: solid 3px #e9b576;
+    border-radius: 5px;
+}
+
+footer p {
+    color: #e88b19;
+    margin-right: 10px;
+}
+
+footer button {
+    background: #eec695;
+    color: #e88b19;
+    text-decoration: underline;
+    border: none;
+    cursor: pointer;
+    font-size: 0.8em;
+    transition: all 0.3s;
+}
+
+footer button:hover {
+    color: #e88b19;
+    transform: translateY(-2px);
+}
+
+
+footer button + button {
+    border-left: 1px solid #d8a23f; 
+    padding-left: 15px;             
+    margin-left: 10px;
+}
+footer button.active {
+    background: #e88b19;
+    color: #eec695;
 }
 
 
