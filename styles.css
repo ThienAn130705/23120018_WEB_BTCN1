@@ -102,11 +102,24 @@ footer button:hover {
 }
 
 
-footer button + button {
-    border-left: 1px solid #d8a23f; 
-    padding-left: 15px;             
-    margin-left: 10px;
+/* Vách ngăn giữa các button trong footer */
+footer button:not(:last-child) {
+    margin-right: 12px;
+    position: relative;
 }
+
+footer button:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    right: -6px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 1px;
+    height: 60%;
+    background: #e88b19;
+    pointer-events: none;
+}
+
 footer button.active {
     background: #e88b19;
     color: #eec695;
