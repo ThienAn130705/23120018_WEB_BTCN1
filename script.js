@@ -10,3 +10,17 @@ $(document).ready(function () {
     $(`button[data-menu="${menu}"]`).addClass("active")
   })
 })
+
+// Xử lý chức năng mở rộng thu gọn nội dung tin tức
+$(".summary_arrow").on("click", function (e) {
+  e.stopPropagation() // Ngăn sự kiện lan lên cha
+  const arrow = $(this) // Lấy phần mũi tên được nhấn
+  const newsItem = arrow.closest(".news-item") // Lấy phần tin tức cha
+  const content = newsItem.find("p") // Lấy phần nội dung tin tức
+
+  // Mở rộng hoặc thu gọn nội dung với hiệu ứng trượt
+  content.slideToggle(150, function () {
+    const nowVisible = $(this).is(":visible") // Kiểm tra trạng thái nội dung
+    arrow.text(nowVisible ? "⇩" : "▶") // Thay đổi biểu tượng mũi tên
+  })
+})
