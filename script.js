@@ -25,6 +25,8 @@ $(".summary_arrow").on("click", function (e) {
   })
 })
 
+let lastSwapY = 0 // lưu vị trí chuột (Y) tại lần hoán vị gần nhất
+let lastDirection = null // lưu hướng di chuyển trước đó ("up" hoặc "down")
 let draggingItem = null
 let placeholder = $("<div class='placeholder'></div>")
 let offsetY = 0
@@ -42,6 +44,9 @@ $(".move_arrow").on("mousedown", function (e) {
   // tạo placeholder giữ chỗ
   placeholder.height(draggingItem.outerHeight(true))
   draggingItem.after(placeholder)
+
+  lastSwapY = e.pageY // Cập nhật tại thời điểm bắt đầu drag
+  lastDirection = null
 
   // set style cho phần tử đang kéo
   draggingItem
@@ -61,21 +66,30 @@ $(".move_arrow").on("mousedown", function (e) {
   $(document).on("mousemove.drag", function (e) {
     draggingItem.css({ top: e.pageY - parent.offset().top - offsetY })
 
+    // xác định hướng hiện tại
+    const deltaY = e.pageY - lastSwapY
+    const direction = deltaY > 0 ? "down" : "up"
+
     const prev = placeholder.prev(".news-item")
     const next = placeholder.next(".news-item")
 
     const placeholderCenter = placeholder.offset().top + placeholder.outerHeight() / 2
     const containerBottom = parent.offset().top + parent.outerHeight()
 
-    const buffer = 60 // vùng đệm tránh nhảy quá nhanh
-    if (prev.length && e.pageY < placeholderCenter - buffer) {
+    const buffer = 40 // vùng đệm tránh nhảy quá nhanh
+    if (direction === "up" && prev.length && e.pageY < placeholderCenter - buffer) {
       placeholder.insertBefore(prev)
+      lastSwapY = e.pageY // cập nhật vị trí hoán vị
+      lastDirection = "up"
     } else if (
+      direction === "down" &&
       next.length &&
       e.pageY > placeholderCenter + buffer &&
       placeholder.offset().top + placeholder.outerHeight() < containerBottom
     ) {
       placeholder.insertAfter(next)
+      lastSwapY = e.pageY // cập nhật vị trí hoán vị
+      lastDirection = "down"
     }
   })
 
