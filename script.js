@@ -102,3 +102,42 @@ $(".move_arrow").on("mousedown", function (e) {
     draggingItem = null
   })
 })
+
+const $dropdown = $(".highlight-dropdown")
+const $btn = $dropdown.find(".dropdown-btn")
+const $checkboxes = $dropdown.find('input[type="checkbox"]')
+const $bgColorInput = $dropdown.find('input[type="color"][name="background"]')
+const $textColorInput = $('.text-highlight input[type="color"][name="style"]')
+
+// đoạn text cần áp dụng
+const $sampleText = $(".text-highlight p")
+
+// style highlight mặc định
+$sampleText.css({
+  color: "red",
+  "background-color": "yellow",
+  "font-weight": "normal",
+  "font-style": "normal",
+  "text-decoration": "none",
+})
+
+if ($bgColorInput.length) $bgColorInput.val("#ffff00")
+if ($textColorInput.length) $textColorInput.val("#ff0000")
+
+//  hiển thị dropdown
+$btn.on("click", function (e) {
+  e.stopPropagation()
+  $dropdown.toggleClass("show")
+})
+
+// lựa chọn highlight style
+$checkboxes.on("change", function () {
+  console.log("Checkbox changed")
+})
+
+// đóng dropdown khi click ra ngoài
+$(document).on("click", function (e) {
+  if (!$(e.target).closest(".highlight-dropdown").length) {
+    $dropdown.removeClass("show")
+  }
+})
