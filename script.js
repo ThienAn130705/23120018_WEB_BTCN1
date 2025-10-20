@@ -179,21 +179,52 @@ const $templateParagraph = $(".template-paragraph")
 // lưu lại nội dung gốc để reset
 const originalContent = $templateParagraph.html()
 
-// Hàm tạo HTML highlight theo style của sampleText
-function wrapWithHighlight(text) {
-  const style = $sampleText.attr("style") || ""
-  return `<span class="highlighted" style="${style}">${text}</span>`
+// Hàm đệ quy highlight text node trong container
+function highlightText($container, keyword, style) {
+  if (!keyword) return
+  let regex
+  try {
+    regex = new RegExp(keyword, "gi")
+  } catch (e) {
+    alert("Biểu thức regex không hợp lệ!")
+    return
+  }
+
+  // Nếu từ khóa nằm trong vùng đã highlight, cập nhật style
+  $container.find(".highlighted").each(function () {
+    const $span = $(this)
+    if ($span.text().match(regex)) {
+      $span.attr("style", style)
+    }
+  })
+
+  // Nếu chưa có highlight, thêm mới
+  $container.contents().each(function () {
+    const node = this
+
+    // Nếu là text node, kiểm tra và thay thế
+    if (node.nodeType === 3) {
+      const text = node.nodeValue
+      if (regex.test(text)) {
+        const replacedHTML = text.replace(regex, (match) => {
+          return `<span class="highlighted" style="${style}">${match}</span>`
+        })
+        $(node).replaceWith(replacedHTML)
+      }
+    }
+    // Nếu là element node và chưa được highlight, đệ quy
+    else if (node.nodeType === 1 && !$(node).hasClass("highlighted")) {
+      highlightText($(node), keyword, style)
+    }
+  })
 }
 
+// Xử lý nút Highlight
 $highlightBtn.on("click", function () {
   const keyword = $searchInput.val().trim()
   if (!keyword) return
-
-  $templateParagraph.html(originalContent)
-
-  const regex = new RegExp(`(${keyword})`, "gi")
-  const newHTML = $templateParagraph.html().replace(regex, (match) => wrapWithHighlight(match))
-  $templateParagraph.html(newHTML)
+  const style = $sampleText.attr("style") || ""
+  highlightText($templateParagraph, keyword, style)
 })
 
 // Xử lý nút Reset
