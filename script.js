@@ -179,6 +179,23 @@ const $templateParagraph = $(".template-paragraph")
 // lưu lại nội dung gốc để reset
 const originalContent = $templateParagraph.html()
 
+// Hàm tạo HTML highlight theo style của sampleText
+function wrapWithHighlight(text) {
+  const style = $sampleText.attr("style") || ""
+  return `<span class="highlighted" style="${style}">${text}</span>`
+}
+
+$highlightBtn.on("click", function () {
+  const keyword = $searchInput.val().trim()
+  if (!keyword) return
+
+  $templateParagraph.html(originalContent)
+
+  const regex = new RegExp(`(${keyword})`, "gi")
+  const newHTML = $templateParagraph.html().replace(regex, (match) => wrapWithHighlight(match))
+  $templateParagraph.html(newHTML)
+})
+
 // Xử lý nút Reset
 $resetBtn.on("click", function () {
   $searchInput.val("")
