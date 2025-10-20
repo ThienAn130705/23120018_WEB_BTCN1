@@ -219,12 +219,41 @@ function highlightText($container, keyword, style) {
   })
 }
 
+// Hàm đệ quy xóa text khớp với từ khóa
+function deleteText($container, keyword) {
+  if (!keyword) return
+  let regex
+  try {
+    regex = new RegExp(keyword, "gi")
+  } catch (e) {
+    alert("Biểu thức regex không hợp lệ!")
+    return
+  }
+
+  $container.contents().each(function () {
+    const node = this
+    if (node.nodeType === 3) {
+      const text = node.nodeValue.replace(regex, "") // xóa từ khóa
+      node.nodeValue = text // cập nhật text node
+    } else if (node.nodeType === 1) {
+      deleteText($(node), keyword)
+    }
+  })
+}
+
 // Xử lý nút Highlight
 $highlightBtn.on("click", function () {
   const keyword = $searchInput.val().trim()
   if (!keyword) return
   const style = $sampleText.attr("style") || ""
   highlightText($templateParagraph, keyword, style)
+})
+
+// Xử lý nút Delete
+$deleteBtn.on("click", function () {
+  const keyword = $searchInput.val().trim()
+  if (!keyword) return
+  deleteText($templateParagraph, keyword)
 })
 
 // Xử lý nút Reset
