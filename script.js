@@ -132,8 +132,35 @@ $btn.on("click", function (e) {
 
 // lựa chọn highlight style
 $checkboxes.on("change", function () {
-  console.log("Checkbox changed")
+  const name = $(this).attr("name")
+  const checked = $(this).is(":checked")
+
+  switch (name) {
+    case "bold":
+      $sampleText.css("font-weight", checked ? "bold" : "normal")
+      break
+    case "italic":
+      $sampleText.css("font-style", checked ? "italic" : "normal")
+      break
+    case "underline":
+      $sampleText.css("text-decoration", checked ? "underline" : "none")
+      break
+  }
 })
+
+// chọn màu nền (background color)
+if ($bgColorInput.length) {
+  $bgColorInput.on("input", function () {
+    $sampleText.css("background-color", $(this).val())
+  })
+}
+
+// chọn màu chữ (text color)
+if ($textColorInput.length) {
+  $textColorInput.on("input", function () {
+    $sampleText.css("color", $(this).val())
+  })
+}
 
 // đóng dropdown khi click ra ngoài
 $(document).on("click", function (e) {
