@@ -183,3 +183,112 @@ aside {
   margin-bottom: 8px;
   height: 50px;
 }
+
+/* Process Text */
+.process-text-container {
+  max-width: 1024px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.process-text-section {
+  background: linear-gradient(to bottom, #7698e4, #7a8cd6);
+  border-radius: 5px 5px 0 0;
+  display: grid;
+  grid-template-columns: auto auto auto;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+}
+
+.process-text-section h2 {
+  color: white;
+  text-align: center;
+}
+
+.template-paragraph {
+  padding: 15px;
+  border-radius: 5px;
+  margin-top: 10px;
+  min-height: 150px;
+}
+
+ /*Text Controls */
+.text-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.text-controls #highlightBtn, #deleteBtn, #resetBtn {
+  padding: 8px 12px;
+  background: linear-gradient(to bottom, #518dee, #5560fa);
+  color: white;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.text-controls #highlightBtn:hover, .text-controls #deleteBtn:hover, .text-controls #resetBtn:hover {
+  background: linear-gradient(to bottom, #3a6fd1, #3f4fc3);
+}
+
+.text-controls #highlightBtn:active, .text-controls #deleteBtn:active, .text-controls #resetBtn:active {
+  transform: translateY(2px);
+}
+
+/* Sample Text */
+.text-highlight {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+#searchInput {
+  padding: 6px 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: auto;
+}
+
+.highlight-dropdown {
+  position: relative;
+  display: flex;
+}
+
+.dropdown-btn {
+  padding: 8px 12px;
+  cursor: pointer;
+  background: #4f89eb;
+  border: none;
+  border-radius: 50%;
+}
+
+.dropdown-btn:hover {
+  background: #3a6fd1;
+}
+
+.dropdown-btn:active {
+  transform: translateY(2px);
+}
+
+.dropdown-content {
+  display: none; /* ẩn mặc định */
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  z-index: 100;
+  padding: 8px;
+}
+
+.dropdown-content label {
+  display: block;
+  padding: 4px 0;
+  cursor: pointer;
+}
+
+.highlight-dropdown.show .dropdown-content {
+  display: block;
+}
