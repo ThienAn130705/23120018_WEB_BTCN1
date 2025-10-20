@@ -67,9 +67,47 @@
       </aside>
 
       <main class="main">
-        <div class="process-text">        
-          <h2>Process Text</h2>
-          <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Architecto odio itaque corrupti non labore necessitatibus ad sunt, sit quisquam voluptate?</p>
+        <div class="process-text-container">    
+          <div class="process-text-section">
+            <h2>Process Text</h2>
+            <div class="text-controls">
+              <input type="text" id="searchInput" placeholder="Nhập chuỗi mẫu..."/>
+              <button id="highlightBtn">Highlight</button>
+              <button id="deleteBtn">Delete</button>
+              <button id="resetBtn">Reset</button>
+            </div>
+            <div class="text-highlight">
+              <p>Sample Text</p>
+
+              <label>
+                <input type="color" name="style" value="#ff0000">
+              </label>
+
+              <div class="highlight-dropdown">
+                <button class="dropdown-btn">Select</button>
+                <div class="dropdown-content">
+                  <label >
+                    <input type="checkbox" name="bold"> Bold
+                  </label>
+                  <label>
+                      <input type="checkbox" name="italic"> Italic
+                  </label>
+                  <label>
+                      <input type="checkbox" name="underline"> Underline
+                  </label>
+                  <label>
+                      <input type="color" name="background" value="#ff0000"> Background
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>    
+          <p class="template-paragraph">
+            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Repudiandae sed quae, esse rerum nihil quaerat ea recusandae! Mollitia totam natus, repellendus culpa soluta labore ea veniam accusamus iusto ad quisquam.
+            Neque placeat eius accusamus nihil porro! Alias maxime labore, ullam ipsam suscipit, incidunt est necessitatibus perferendis libero adipisci, quidem rem quae dolorum repudiandae dolor. Odit dicta dolor officiis in doloribus!
+            Accusantium, nam incidunt! Dolorum nihil molestiae ipsam laudantium dolor ullam quia delectus, earum laboriosam cupiditate magnam quas ea. Impedit ducimus ea eos accusamus, facere consequatur tempore amet expedita voluptates consequuntur.
+            Asperiores hic ipsum id officia fuga earum consequuntur neque. Saepe incidunt libero delectus accusamus illum commodi ullam vero similique quibusdam perspiciatis eligendi asperiores neque, obcaecati, enim eveniet, minus sed! Molestias?
+          </p>
         </div>
         <div class="drag_drop">
           <h2>Drag and Drop</h2>
