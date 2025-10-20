@@ -168,3 +168,19 @@ $(document).on("click", function (e) {
     $dropdown.removeClass("show")
   }
 })
+
+// thành phần xử lý highlight, delete, reset
+const $searchInput = $("#searchInput")
+const $highlightBtn = $("#highlightBtn")
+const $deleteBtn = $("#deleteBtn")
+const $resetBtn = $("#resetBtn")
+const $templateParagraph = $(".template-paragraph")
+
+// lưu lại nội dung gốc để reset
+const originalContent = $templateParagraph.html()
+
+// Xử lý nút Reset
+$resetBtn.on("click", function () {
+  $searchInput.val("")
+  $templateParagraph.html(originalContent)
+})
