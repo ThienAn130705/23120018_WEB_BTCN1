@@ -24,3 +24,67 @@ $(".summary_arrow").on("click", function (e) {
     arrow.text(nowVisible ? "⇩" : "▶") // Thay đổi biểu tượng mũi tên
   })
 })
+
+let draggingItem = null
+let placeholder = $("<div class='placeholder'></div>")
+let offsetY = 0
+
+$(".move_arrow").on("mousedown", function (e) {
+  e.stopPropagation()
+  e.preventDefault()
+
+  draggingItem = $(this).closest(".news-item")
+  const rect = draggingItem[0].getBoundingClientRect()
+  const parent = draggingItem.parent()
+
+  offsetY = e.clientY - rect.top
+
+  // tạo placeholder giữ chỗ
+  placeholder.height(draggingItem.outerHeight(true))
+  draggingItem.after(placeholder)
+
+  // set style cho phần tử đang kéo
+  draggingItem
+    .addClass("dragging")
+    .css({
+      position: "absolute",
+      width: rect.width,
+      left: rect.left - parent.offset().left,
+      top: rect.top - parent.offset().top,
+      zIndex: 1000,
+      cursor: "ns-resize",
+      pointerEvents: "none", // không hover vùng cũ
+    })
+    .appendTo(parent) // di chuyển ra ngoài luồng thật
+
+  // di chuyển item theo chuột
+  $(document).on("mousemove.drag", function (e) {
+    draggingItem.css({ top: e.pageY - parent.offset().top - offsetY })
+
+    const prev = placeholder.prev(".news-item")
+    const next = placeholder.next(".news-item")
+
+    const placeholderCenter = placeholder.offset().top + placeholder.outerHeight() / 2
+    const containerBottom = parent.offset().top + parent.outerHeight()
+
+    const buffer = 60 // vùng đệm tránh nhảy quá nhanh
+    if (prev.length && e.pageY < placeholderCenter - buffer) {
+      placeholder.insertBefore(prev)
+    } else if (
+      next.length &&
+      e.pageY > placeholderCenter + buffer &&
+      placeholder.offset().top + placeholder.outerHeight() < containerBottom
+    ) {
+      placeholder.insertAfter(next)
+    }
+  })
+
+  // thả chuột ra
+  $(document).on("mouseup.drag", function () {
+    $(document).off(".drag")
+    placeholder.before(draggingItem)
+    draggingItem.removeClass("dragging").removeAttr("style")
+    placeholder.remove()
+    draggingItem = null
+  })
+})
