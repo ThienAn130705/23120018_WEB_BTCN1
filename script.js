@@ -261,3 +261,40 @@ $resetBtn.on("click", function () {
   $searchInput.val("")
   $templateParagraph.html(originalContent)
 })
+
+// Drag & Drop
+// Thêm animal
+const animalEmojis = {
+  mouse: "🐁",
+  buffalo: "🐃",
+  tiger: "🐅",
+  cat: "🐈",
+  dragon: "🐉",
+  snake: "🐍",
+  horse: "🐎",
+  goat: "🐐",
+  monkey: "🐒",
+  rooster: "🐓",
+  dog: "🐕",
+  pig: "🐖",
+}
+
+$("#addBtn").click(function () {
+  let selectedValue = $("#itemSelect").val()
+  if (!selectedValue) {
+    return
+  }
+
+  let animalName = selectedValue
+  let animalEmoji = animalEmojis[selectedValue]
+  let itemId = "item-" + Date.now()
+
+  let itemHtml = `
+                    <div class="animal-item" draggable="true" id="${itemId}" data-animal="${animalName}">
+                        <span class="emoji">${animalEmoji}</span>
+                        <span class="name">${animalName}</span>
+                    </div>
+                `
+
+  $(".dropZone").append(itemHtml)
+})
