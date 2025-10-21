@@ -292,3 +292,69 @@ aside {
 .highlight-dropdown.show .dropdown-content {
   display: block;
 }
+
+/* Drag and Drop */
+.drag-drop-container {
+  max-width: 1024px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-top: 20px;
+}
+
+.drag-drop-section {
+  background: linear-gradient(to bottom, #7698e4, #7a8cd6);
+  border-radius: 5px 5px 0 0;
+  display: grid;
+  grid-template-columns: auto auto;
+  align-items: center;
+  padding: 10px;
+}
+
+.drag-drop-section h2 {
+  color: white;
+}
+
+.drag-drop-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.drag-drop-controls select {
+    font-size: 1.5rem;
+  padding: 8px 12px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+}
+
+.drag-drop-controls button {
+  padding: 8px 12px;
+  background: linear-gradient(to bottom, #518dee, #5560fa);
+  color: white;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.drag-drop-controls button:hover {
+  background: linear-gradient(to bottom, #3a6fd1, #3f4fc3);
+}
+
+.drag-drop-controls button:active {
+  transform: translateY(2px);
+}
+
+.drag-drop-container .dropZone {
+  border: 2px dashed #ccc;
+  border-radius: 5px;
+  margin: 10px;
+  padding: 10px;
+  background-color: #fafafa;
+  min-height: 330px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  align-content: flex-start;
+  position: relative;
+}
