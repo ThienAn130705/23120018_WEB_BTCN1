@@ -290,11 +290,140 @@ $("#addBtn").click(function () {
   let itemId = "item-" + Date.now()
 
   let itemHtml = `
-                    <div class="animal-item" draggable="true" id="${itemId}" data-animal="${animalName}">
-                        <span class="emoji">${animalEmoji}</span>
-                        <span class="name">${animalName}</span>
-                    </div>
-                `
+    <div class="animal-item" id="${itemId}" data-animal="${animalName}">
+      <span class="emoji">${animalEmoji}</span>
+      <span class="name">${animalName}</span>
+    </div>
+  `
 
   $(".dropZone").append(itemHtml)
+})
+
+function initAnimalDragDrop() {
+  let $draggedElement = null
+  let isDragging = false
+  let startX, startY
+  let offsetX, offsetY
+  let originalIndex = -1
+
+  // Mousedown - bắt đầu drag
+  $(".dropZone").on("mousedown", ".animal-item", function (e) {
+    e.preventDefault()
+
+    $draggedElement = $(this)
+    const rect = this.getBoundingClientRect()
+
+    // Lưu vị trí ban đầu
+    originalIndex = $draggedElement.index()
+
+    // Lưu vị trí chuột so với element
+    offsetX = e.clientX - rect.left
+    offsetY = e.clientY - rect.top
+    startX = e.clientX
+    startY = e.clientY
+
+    isDragging = false
+
+    // Thêm event cho document
+    $(document).on("mousemove.dragAnimal", handleMouseMove)
+    $(document).on("mouseup.dragAnimal", handleMouseUp)
+  })
+
+  function handleMouseMove(e) {
+    if (!$draggedElement) return
+
+    // Chỉ bắt đầu drag khi di chuyển ít nhất 5px
+    if (!isDragging) {
+      const distance = Math.sqrt(Math.pow(e.clientX - startX, 2) + Math.pow(e.clientY - startY, 2))
+
+      if (distance < 5) return
+
+      isDragging = true
+
+      // Thêm class dragging và chuyển sang absolute positioning
+      $draggedElement.addClass("dragging")
+
+      const $dropZone = $(".dropZone")
+      const dropZoneOffset = $dropZone.offset()
+
+      $draggedElement.css({
+        position: "absolute",
+        zIndex: 1000,
+        pointerEvents: "none",
+        left: e.pageX - dropZoneOffset.left - offsetX,
+        top: e.pageY - dropZoneOffset.top - offsetY,
+      })
+    }
+
+    if (!isDragging) return
+
+    // Di chuyển element theo chuột
+    const $dropZone = $(".dropZone")
+    const dropZoneOffset = $dropZone.offset()
+
+    $draggedElement.css({
+      left: e.pageX - dropZoneOffset.left - offsetX,
+      top: e.pageY - dropZoneOffset.top - offsetY,
+    })
+  }
+
+  function handleMouseUp(e) {
+    if ($draggedElement && isDragging) {
+      const $dropZone = $(".dropZone")
+      const dropZoneRect = $dropZone[0].getBoundingClientRect()
+
+      // Kiểm tra chuột có trong dropZone không
+      const isInsideDropZone =
+        e.clientX >= dropZoneRect.left &&
+        e.clientX <= dropZoneRect.right &&
+        e.clientY >= dropZoneRect.top &&
+        e.clientY <= dropZoneRect.bottom
+
+      if (isInsideDropZone) {
+        // Tìm vị trí insert
+        const items = $dropZone.children(".animal-item").not($draggedElement)
+        let inserted = false
+
+        // Duyệt qua các item để tìm vị trí chèn
+        items.each(function () {
+          const rect = this.getBoundingClientRect()
+          const itemCenterX = rect.left + rect.width / 2
+          const itemCenterY = rect.top + rect.height / 2
+
+          if (!inserted) {
+            // Ưu tiên so sánh theo hàng (Y) trước, sau đó cột (X)
+            if (
+              e.clientY < itemCenterY ||
+              (Math.abs(e.clientY - itemCenterY) < rect.height / 2 && e.clientX < itemCenterX)
+            ) {
+              $(this).before($draggedElement)
+              inserted = true
+              return false
+            }
+          }
+        })
+
+        // Nếu chưa insert, thêm vào cuối
+        if (!inserted) {
+          $dropZone.append($draggedElement)
+        }
+      }
+
+      // Reset style
+      $draggedElement.removeClass("dragging").removeAttr("style")
+    }
+
+    // Reset biến
+    $draggedElement = null
+    isDragging = false
+    originalIndex = -1
+
+    // Bỏ event
+    $(document).off(".dragAnimal")
+  }
+}
+
+// Khởi tạo
+$(document).ready(function () {
+  initAnimalDragDrop()
 })
