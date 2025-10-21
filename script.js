@@ -301,10 +301,19 @@ $("#addBtn").click(function () {
 
 function initAnimalDragDrop() {
   let $draggedElement = null
+  let $placeholder = null // biến placeholder giữ chỗ
   let isDragging = false
   let startX, startY
   let offsetX, offsetY
   let originalIndex = -1
+
+  // Tạo placeholder giữ chỗ
+  function createPlaceholder($element) {
+    return $('<div class="animal-placeholder"></div>').css({
+      width: $element.outerWidth(),
+      height: $element.outerHeight(),
+    })
+  }
 
   // Mousedown - bắt đầu drag
   $(".dropZone").on("mousedown", ".animal-item", function (e) {
@@ -340,6 +349,10 @@ function initAnimalDragDrop() {
 
       isDragging = true
 
+      // Tạo và chèn placeholder giữ chỗ
+      $placeholder = createPlaceholder($draggedElement)
+      $draggedElement.after($placeholder)
+
       // Thêm class dragging và chuyển sang absolute positioning
       $draggedElement.addClass("dragging")
 
@@ -365,6 +378,41 @@ function initAnimalDragDrop() {
       left: e.pageX - dropZoneOffset.left - offsetX,
       top: e.pageY - dropZoneOffset.top - offsetY,
     })
+
+    // Cập nhật vị trí placeholder
+    const dropZoneRect = $dropZone[0].getBoundingClientRect()
+
+    const isInsideDropZone =
+      e.clientX >= dropZoneRect.left &&
+      e.clientX <= dropZoneRect.right &&
+      e.clientY >= dropZoneRect.top &&
+      e.clientY <= dropZoneRect.bottom
+
+    if (isInsideDropZone) {
+      const items = $dropZone.children(".animal-item").not($draggedElement)
+      let inserted = false
+
+      items.each(function () {
+        const rect = this.getBoundingClientRect()
+        const itemCenterX = rect.left + rect.width / 2
+        const itemCenterY = rect.top + rect.height / 2
+
+        if (!inserted) {
+          if (
+            e.clientY < itemCenterY ||
+            (Math.abs(e.clientY - itemCenterY) < rect.height / 2 && e.clientX < itemCenterX)
+          ) {
+            $(this).before($placeholder)
+            inserted = true
+            return false
+          }
+        }
+      })
+
+      if (!inserted) {
+        $dropZone.append($placeholder)
+      }
+    }
   }
 
   function handleMouseUp(e) {
@@ -379,39 +427,19 @@ function initAnimalDragDrop() {
         e.clientY >= dropZoneRect.top &&
         e.clientY <= dropZoneRect.bottom
 
-      if (isInsideDropZone) {
-        // Tìm vị trí insert
-        const items = $dropZone.children(".animal-item").not($draggedElement)
-        let inserted = false
-
-        // Duyệt qua các item để tìm vị trí chèn
-        items.each(function () {
-          const rect = this.getBoundingClientRect()
-          const itemCenterX = rect.left + rect.width / 2
-          const itemCenterY = rect.top + rect.height / 2
-
-          if (!inserted) {
-            // Ưu tiên so sánh theo hàng (Y) trước, sau đó cột (X)
-            if (
-              e.clientY < itemCenterY ||
-              (Math.abs(e.clientY - itemCenterY) < rect.height / 2 && e.clientX < itemCenterX)
-            ) {
-              $(this).before($draggedElement)
-              inserted = true
-              return false
-            }
-          }
-        })
-
-        // Nếu chưa insert, thêm vào cuối
-        if (!inserted) {
-          $dropZone.append($draggedElement)
-        }
+      // Nếu thả trong dropZone, chèn vào vị trí placeholder
+      if (isInsideDropZone && $placeholder && $placeholder.parent().length) {
+        $placeholder.replaceWith($draggedElement)
       }
-
       // Reset style
       $draggedElement.removeClass("dragging").removeAttr("style")
     }
+
+    // Xóa placeholder
+    if ($placeholder && $placeholder.parent().length) {
+      $placeholder.remove()
+    }
+    $placeholder = null
 
     // Reset biến
     $draggedElement = null
