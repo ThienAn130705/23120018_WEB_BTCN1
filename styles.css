@@ -352,9 +352,42 @@ aside {
   padding: 10px;
   background-color: #fafafa;
   min-height: 330px;
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(175px, 1fr));
   gap: 15px;
   align-content: flex-start;
   position: relative;
+}
+
+/* Khối animal-item chung */
+.animal-item {
+  width: 175px;
+  border-radius: 10px;
+  text-align: center;
+  cursor: grab;
+  user-select: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+  background: #fff;
+  position: relative;
+}
+
+/* Emoji */
+.animal-item .emoji {
+  background: radial-gradient(
+#7ca1e6,#3558a2);
+  font-size: 60px;
+  margin-bottom: 10px;
+  display: block;
+  border-radius: 10px 10px 0 0;
+  padding: 8px 0;
+  color: white;
+}
+
+/* Tên động vật */
+.animal-item .name {
+  font-weight: bold;
+  display: block;
+  text-transform: capitalize;
+  padding-bottom: 8px;
 }
