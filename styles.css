@@ -366,7 +366,7 @@ aside {
   text-align: center;
   cursor: grab;
   user-select: none;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.3s ease, box-shadow 0.s ease;
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
   background: #fff;
   position: relative;
@@ -390,4 +390,31 @@ aside {
   display: block;
   text-transform: capitalize;
   padding-bottom: 8px;
+}
+
+/* Hiệu ứng khi kéo */
+.animal-item.dragging {
+  opacity: 0.7;
+  cursor: grabbing !important;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+  transform: scale(1.05);
+  transition: none;
+}
+
+.animal-placeholder {
+  width: 175px;
+  height: 120px;
+  border: 2px dashed #7698e4;
+  border-radius: 10px;
+  background-color: rgba(118, 152, 228, 0.1);
+  transition: all 0.2s ease;
+}
+
+.animal-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.animal-item:active {
+  cursor: grabbing;
 }
