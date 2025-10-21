@@ -366,7 +366,7 @@ aside {
   text-align: center;
   cursor: grab;
   user-select: none;
-  transition: transform 0.3s ease, box-shadow 0.s ease;
+  transition: transform 0.3s ease, box-shadow 0.5s ease;
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
   background: #fff;
   position: relative;

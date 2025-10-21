@@ -307,6 +307,39 @@ function initAnimalDragDrop() {
   let offsetX, offsetY
   let originalIndex = -1
 
+  // Ghi lại vị trí của các phần tử
+  function recordPositions($zone) {
+    const rects = new Map() // Map để lưu trữ vị trí
+    // Lặp qua các phần tử và lưu vị trí
+    $zone.find(".animal-item").each(function () {
+      rects.set(this, this.getBoundingClientRect())
+    })
+    return rects
+  }
+
+  // Tạo hiệu ứng trượt mượt bằng FLIP animation
+  function playFLIPAnimation($zone, firstRects) {
+    const lastRects = recordPositions($zone) // vị trí cuối cùng
+
+    // Tính toán và áp dụng hiệu ứng
+    lastRects.forEach((last, el) => {
+      const first = firstRects.get(el) // vị trí ban đầu
+      if (!first) return
+
+      const dx = first.left - last.left
+      const dy = first.top - last.top
+
+      // Áp dụng chuyển đổi tạm thời để tạo hiệu ứng
+      if (dx || dy) {
+        el.style.transform = `translate(${dx}px, ${dy}px)`
+        el.style.transition = "none"
+        el.getBoundingClientRect() // reflow
+        el.style.transition = "transform 0.25s ease"
+        el.style.transform = "translate(0, 0)"
+      }
+    })
+  }
+
   // Tạo placeholder giữ chỗ
   function createPlaceholder($element) {
     return $('<div class="animal-placeholder"></div>').css({
@@ -389,6 +422,9 @@ function initAnimalDragDrop() {
       e.clientY <= dropZoneRect.bottom
 
     if (isInsideDropZone) {
+      // Ghi lại vị trí ban đầu của các phần tử
+      const firstRects = recordPositions($dropZone)
+
       const items = $dropZone.children(".animal-item").not($draggedElement)
       let inserted = false
 
@@ -412,6 +448,9 @@ function initAnimalDragDrop() {
       if (!inserted) {
         $dropZone.append($placeholder)
       }
+
+      // Áp dụng hiệu ứng FLIP
+      playFLIPAnimation($dropZone, firstRects)
     }
   }
 
