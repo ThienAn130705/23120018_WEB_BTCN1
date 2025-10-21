@@ -109,15 +109,28 @@
             Asperiores hic ipsum id officia fuga earum consequuntur neque. Saepe incidunt libero delectus accusamus illum commodi ullam vero similique quibusdam perspiciatis eligendi asperiores neque, obcaecati, enim eveniet, minus sed! Molestias?
           </p>
         </div>
-        <div class="drag_drop">
-          <h2>Drag and Drop</h2>
-          <div class="drag-container">
-            <div class="draggable" >Item 1</div>
-            <div class="draggable" >Item 2</div>
-            <div class="draggable" >Item 3</div>
+        <div class="drag-drop-container">
+          <div class="drag-drop-section">
+            <h2>Drag &amp; Drop</h2>
+            <div class="drag-drop-controls">
+              <select id="itemSelect">
+                  <option value="mouse">🐁</option>
+                  <option value="buffalo">🐃</option>
+                  <option value="tiger">🐅</option>
+                  <option value="cat">🐈</option>
+                  <option value="dragon">🐉</option>
+                  <option value="snake">🐍</option>
+                  <option value="horse">🐎</option>
+                  <option value="goat">🐐</option>
+                  <option value="monkey">🐒</option>
+                  <option value="rooster">🐓</option>
+                  <option value="dog">🐕</option>
+                  <option value="pig">🐖</option>
+              </select>
+              <button id="addBtn">Add New</button>
+            </div>
           </div>
-          <div class="drop-container" id="dropZone">
-            Drop items here
+          <div class="dropZone">
           </div>
         </div>
       </main>
