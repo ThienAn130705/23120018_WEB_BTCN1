@@ -418,3 +418,166 @@ aside {
 .animal-item:active {
   cursor: grabbing;
 }
+
+@media (max-width: 576px) {
+  
+  /* Container */
+  .container {
+    padding: 0 10px;
+  }
+
+  /* Header */
+  .header_nav {
+    height: auto;
+  }
+
+  header h1 {
+    font-size: 1.2em;
+    margin-bottom: 8px;
+  }
+
+  /* Navigation */
+  nav {
+    max-width: 100%;
+    margin-top: 5px;
+    gap: 8px;
+    padding: 8px;
+  }
+
+  nav button {
+    font-size: 0.75em;
+    padding: 4px 8px;
+  }
+
+  /* Main Content */
+  .main-content {
+    flex-direction: column;
+  }
+
+  /* Aside */
+  aside {
+    width: 100%;
+    padding: 10px;
+  }
+
+  .news-item {
+    margin-bottom: 10px;
+  }
+
+  .news-controls {
+    padding: 8px;
+    font-size: 0.9em;
+  }
+
+  /* Process Text */
+  .process-text-section {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 15px 10px;
+  }
+
+  .process-text-section h2 {
+    font-size: 1.3em;
+  }
+
+  /* Text Controls */
+  .text-controls {
+    justify-content: center;
+    width: 100%;
+    gap: 8px;
+  }
+
+  /* Text Highlight */
+  .text-highlight {
+    gap: 10px;
+    justify-content: center;
+    width: 100%;
+  }
+
+  /* Template Paragraph */
+  .template-paragraph {
+    padding: 10px;
+    font-size: 0.9em;
+  }
+
+  /* Drag & Drop */
+  .drag-drop-section {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 15px 10px;
+  }
+
+  .drag-drop-section h2 {
+    font-size: 1.3em;
+    text-align: center;
+  }
+
+  .drag-drop-controls {
+    justify-content: center;
+    width: 100%;
+    gap: 8px;
+  }
+
+  /* Drop Zone */
+  .drag-drop-container .dropZone {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 10px;
+    padding: 8px;
+    margin: 8px;
+  }
+
+  /* Animal Items */
+  .animal-item {
+    width: 100%;
+    max-width: 140px;
+    margin: 0 auto;
+  }
+
+  .animal-item .emoji {
+    font-size: 50px;
+    padding: 6px 0;
+  }
+
+  .animal-item .name {
+    font-size: 0.9em;
+    padding-bottom: 6px;
+  }
+
+  .animal-placeholder {
+    width: 100%;
+    max-width: 140px;
+    height: 100px;
+  }
+
+  /* Footer */
+  footer {
+    flex-direction: column;
+    height: auto;
+    padding: 15px 10px;
+    gap: 10px;
+  }
+
+  footer p {
+    margin-right: 0;
+    margin-bottom: 8px;
+  }
+
+  footer button {
+    font-size: 0.75em;
+    padding: 4px 8px;
+  }
+
+  footer button:not(:last-child) {
+    margin-right: 8px;
+  }
+
+  footer button:not(:last-child)::after {
+    display: none;
+  }
+
+  /* Dropdown Content */
+  .dropdown-content {
+    right: 0;
+    left: auto;
+  }
+}
